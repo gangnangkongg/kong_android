@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_nav_menu">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="홈" />
+    <item
+        android:id="@+id/navigation_record"
+        android:icon="@drawable/ic_record"
+        android:title="기록" />
+    <item
+        android:id="@+id/navigation_plan"
+        android:icon="@drawable/ic_plan"
+        android:title="계획" />
+    <item
+        android:id="@+id/navigation_my"
+        android:icon="@drawable/ic_my"
+        android:title="내 정보"/>
+
+</menu>
