@@ -1,0 +1,29 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.kong_android.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/RecordFragment"
+        android:name="com.example.kong_android.record.RecordFragment"
+        android:label="RecordFragment"
+        tools:layout="@layout/fragment_record" />
+
+    <fragment
+        android:id="@+id/PlanFragment"
+        android:name="com.example.kong_android.plan.PlanFragment"
+        android:label="PlanFragment"
+        tools:layout="@layout/fragment_plan" />
+
+    <fragment
+        android:id="@+id/MyFragment"
+        android:name="com.example.kong_android.my.MyFragment"
+        android:label="MyFragment"
+        tools:layout="@layout/fragment_my" />
+</navigation>

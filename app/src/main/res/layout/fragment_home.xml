@@ -189,14 +189,6 @@
                         android:fontFamily="@font/pretendard_semibold"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@id/total_month_tv" />
-                    
-                    <ImageButton
-                        android:id="@+id/total_next_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_next"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <TextView
                         android:id="@+id/total_amount_tv"

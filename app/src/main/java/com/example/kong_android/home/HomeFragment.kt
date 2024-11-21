@@ -1,6 +1,5 @@
 package com.example.kong_android.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,15 +8,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.anychart.AnyChartView
 import com.example.kong_android.R
 import com.example.kong_android.databinding.FragmentHomeBinding
 import androidx.navigation.fragment.findNavController
-import com.anychart.AnyChart
-import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -36,11 +30,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        /* 11월 합계 금액 더보기 버튼 클릭 시 기록 페이지로 이동 */
-        binding.totalNextBtn.setOnClickListener {
-            findNavController().navigate(R.id.navigation_record)
-        }
 
         /* 11월 수입 조회 */
 
@@ -105,7 +94,7 @@ class HomeFragment : Fragment() {
             pieChart.setHoleColor(android.graphics.Color.WHITE)
             pieChart.setTransparentCircleColor(android.graphics.Color.WHITE)
             pieChart.setCenterText("지출 분석")
-            pieChart.setCenterTextSize(12f)
+            pieChart.setCenterTextSize(15f)
             pieChart.legend.isEnabled = false
             dataSet.valueTextSize = 10f
             dataSet.valueTextColor = android.graphics.Color.WHITE

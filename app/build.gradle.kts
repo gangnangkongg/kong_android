@@ -53,8 +53,8 @@ dependencies {
     implementation("com.github.anychart:anychart-android:1.1.5")
 
     // bottom navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.0")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
