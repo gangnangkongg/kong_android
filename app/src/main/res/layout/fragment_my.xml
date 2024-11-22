@@ -193,7 +193,7 @@
                         android:id="@+id/category_else_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="카테고리에 가장 많음 금액을 사용하였어요!"
+                        android:text="카테고리에 가장 많은 금액을 사용하였어요!"
                         android:gravity="center"
                         android:textSize="12dp"
                         android:fontFamily="@font/pretendard_medium"
