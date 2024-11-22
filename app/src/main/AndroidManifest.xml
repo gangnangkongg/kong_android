@@ -32,6 +32,9 @@
         <activity
             android:name=".home.HomeActivity"
             android:exported="true" />
+        <activity
+            android:name=".record.RecordAddActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
