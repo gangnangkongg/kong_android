@@ -35,6 +35,9 @@
         <activity
             android:name=".record.RecordAddActivity"
             android:exported="true" />
+        <activity
+            android:name=".plan.PlanAddActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
