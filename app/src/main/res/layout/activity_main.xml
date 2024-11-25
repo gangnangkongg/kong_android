@@ -20,6 +20,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="200dp"/>
+
+    <ImageView
+        android:id="@+id/ping_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ping_img"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/logo_img"
+        app:layout_constraintEnd_toEndOf="@id/logo_img"
+        app:layout_constraintTop_toTopOf="@id/logo_img"
+        app:layout_constraintBottom_toBottomOf="@id/logo_img"
+        android:translationZ="100dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ping_btn"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:onClick="onPingButtonClick"
+        app:layout_constraintStart_toStartOf="@id/logo_img"
+        app:layout_constraintEnd_toEndOf="@id/logo_img"
+        app:layout_constraintTop_toTopOf="@id/logo_img"
+        app:layout_constraintBottom_toBottomOf="@id/logo_img" />
     
     <TextView
         android:id="@+id/start_tv1"
