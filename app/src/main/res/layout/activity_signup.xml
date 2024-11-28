@@ -117,18 +117,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/id_verify_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="중복확인"
-            android:textColor="@color/deep_gray"
-            android:background="@android:color/transparent"
-            android:onClick="onNameVerifyButtonClick"
-            app:layout_constraintTop_toTopOf="@id/id_edit"
-            app:layout_constraintBottom_toBottomOf="@id/id_edit"
-            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
