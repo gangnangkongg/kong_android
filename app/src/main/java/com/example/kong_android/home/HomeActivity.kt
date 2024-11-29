@@ -15,7 +15,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
-        bottomNavigationView.setOnItemSelectedListener{ menuItem ->
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
             val selectedFragment = when (menuItem.itemId) {
                 R.id.navigation_home -> HomeFragment()
                 R.id.navigation_record -> RecordFragment()

@@ -18,10 +18,13 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
     private lateinit var idEdit: EditText
     private lateinit var pwEdit: EditText
+    private lateinit var sharedPreferencesManager: SharedPreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        sharedPreferencesManager = SharedPreferencesManager(this)
 
         idEdit = findViewById(R.id.id_edit)
         pwEdit = findViewById(R.id.pw_edit)
@@ -62,25 +65,61 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     if (loginResponse != null) {
-                        Log.d("LoginActivity", "AccessToken: ${loginResponse.accessToken}")
-                        Log.d("LoginActivity", "RefreshToken: ${loginResponse.refreshToken}")
-                        Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        val status = loginResponse.status
+                        val accessToken = loginResponse.data.accessToken
+                        val refreshToken = loginResponse.data.refreshToken
 
-                        // 홈 화면으로 이동
-                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        // 디버깅용 로그
+                        Log.d(
+                            "LoginActivity",
+                            "status: $status, accessToken: $accessToken, refreshToken: $refreshToken"
+                        )
+
+                        // status가 200일 때 로그인 성공
+                        if (status == 200 && !accessToken.isNullOrEmpty() && !refreshToken.isNullOrEmpty()) {
+                            Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
+
+                            // 로그인 후 토큰 저장
+                            sharedPreferencesManager.saveTokens(accessToken, refreshToken)
+
+                            // 홈화면으로 이동
+                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(this@LoginActivity, "로그인 실패: 잘못된 응답", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     } else {
-                        Toast.makeText(this@LoginActivity, "응답이 비어 있습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "응답이 비어있습니다.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this@LoginActivity, "로그인 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    // 로그인 실패 시 상태 코드에 따른 처리
+                    when (response.code()) {
+                        400 -> Toast.makeText(
+                            this@LoginActivity,
+                            "비밀번호가 일치하지 않습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        401 -> Toast.makeText(
+                            this@LoginActivity,
+                            "권한이 없습니다. 다시 시도해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        else -> Toast.makeText(
+                            this@LoginActivity,
+                            "알 수 없는 오류가 발생했습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Log.e("LoginActivity", "로그인 요청 실패", t)
-                Toast.makeText(this@LoginActivity, "로그인 요청 실패: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("LoginActivity", "로그인 실패", t)
+                Toast.makeText(this@LoginActivity, "서버와 연결할 수 없습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }

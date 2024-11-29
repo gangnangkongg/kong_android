@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.kong_android.R
+import com.example.kong_android.auth.SharedPreferencesManager
 import com.example.kong_android.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieDataSet
@@ -25,28 +26,49 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var sharedPreferencesManager: SharedPreferencesManager
+    private var token: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        /* 11월 수입 조회 */
-
-        /* 11월 지출 조회 */
-
-        /* 11월 합계 금액 조회 */
-
-        /* 11월 카테고리 조회 */
-        // PieChart 초기화
-        pieChart = binding.categoryChartView
-
-        // HomeViewModel 초기화
+        // viewModel 초기화
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        // ViewModel에서 데이터를 받아와서 차트에 적용
-        homeViewModel.pieChartData.observe(viewLifecycleOwner, { data ->
-            setUpPieChart(data)
-        })
+        // SharedPreferencesManager 초기화
+        sharedPreferencesManager = SharedPreferencesManager(requireContext())
+
+        // 저장된 accessToken을 가져오기
+        token = sharedPreferencesManager.getAccessToken()
+
+        // 토큰이 null이 아니면 데이터를 요청
+        token?.let {
+            homeViewModel.fetchHomeData(it)
+            homeViewModel.fetchAnalysisData(it)
+        }
+
+        pieChart = binding.categoryChartView
+
+        // 홈 데이터 호출
+        homeViewModel.homeData.observe(viewLifecycleOwner) { homeData ->
+            binding.importAmountTv.text = homeData.incomeTotal.toString()
+            binding.outlayAmountTv.text = homeData.spendTotal.toString()
+            binding.totalAmountTv.text = homeData.total.toString()
+        }
+
+        // 분석 데이터 호출
+        homeViewModel.pieChartData.observe(viewLifecycleOwner) { pieData ->
+            setUpPieChart(pieData)
+        }
+
+        // 가장 큰 금액을 가진 카테고리명 설정
+        homeViewModel.topCategoryName.observe(viewLifecycleOwner) { topCategory ->
+            topCategory?.let {
+                binding.categoryTypeTv.text = it
+            }
+        }
 
         return binding.root
     }
@@ -56,17 +78,15 @@ class HomeFragment : Fragment() {
 
         // 데이터를 PieEntry로 변환
         for ((label, value) in data) {
-            if (value > 0) { // 값이 0보다 큰 경우에만 PieEntry 추가
+            if (value > 0) {
                 entries.add(PieEntry(value, label))
             }
         }
 
-        if (entries.isNotEmpty()) { // 데이터가 비어있지 않은 경우에만 차트 업데이트
-            // PieDataSet 생성
+        if (entries.isNotEmpty()) {
             val dataSet = PieDataSet(entries, "Categories")
             dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
 
-            // 사용자가 지정한 색상 리스트
             val customColors = listOf(
                 ContextCompat.getColor(requireContext(), R.color.green_1),
                 ContextCompat.getColor(requireContext(), R.color.green_2),
@@ -77,18 +97,15 @@ class HomeFragment : Fragment() {
             )
             dataSet.colors = customColors
 
-            // PieData 생성
             val pieData = PieData(dataSet)
             pieChart.data = pieData
 
-            // 차트 스타일 설정
             pieChart.description = Description().apply {
                 text = "Category Distribution"
-                isEnabled = false  // Description 비활성화 (필요에 따라 조정)
+                isEnabled = false
             }
-            pieChart.invalidate() // 차트 갱신
+            pieChart.invalidate()
 
-            // 추가적인 차트 스타일 설정
             pieChart.isDrawHoleEnabled = true
             pieChart.setHoleColor(android.graphics.Color.WHITE)
             pieChart.setTransparentCircleColor(android.graphics.Color.WHITE)

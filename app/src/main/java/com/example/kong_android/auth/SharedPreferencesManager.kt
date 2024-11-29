@@ -19,10 +19,12 @@ class SharedPreferencesManager(context: Context) {
             return
         }
 
+        Log.d("SharedPreferencesManager", "Saving tokens - AccessToken: $accessToken, RefreshToken: $refreshToken")
         editor.putString(PREF_ACCESS_TOKEN, accessToken)
         editor.putString(PREF_REFRESH_TOKEN, refreshToken)
         editor.apply()
     }
+
 
     fun getAccessToken(): String? {
         return sharedPreferences.getString(PREF_ACCESS_TOKEN, null)

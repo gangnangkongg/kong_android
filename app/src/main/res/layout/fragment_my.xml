@@ -51,7 +51,7 @@
                     android:id="@+id/id_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="yw112912"
+                    android:text="User"
                     android:gravity="center"
                     android:fontFamily="@font/pretendard_bold"
                     android:textColor="@color/black"

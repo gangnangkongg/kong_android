@@ -5,6 +5,8 @@ import com.example.kong_android.auth.LoginRequest
 import com.example.kong_android.auth.LoginResponse
 import com.example.kong_android.auth.SignupRequest
 import com.example.kong_android.auth.SignupResponse
+import com.example.kong_android.home.AnalysisResponse
+import com.example.kong_android.home.HomeResponse
 import com.google.gson.GsonBuilder
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -14,13 +16,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
-import java.net.CookieManager
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.http.GET
+import retrofit2.http.Header
 
 interface RetrofitService {
     // 로그인
@@ -30,6 +33,14 @@ interface RetrofitService {
     // 회원 가입
     @POST("member/register")
     fun registerUser(@Body request: SignupRequest): Call<SignupResponse>
+
+    // 홈화면 금액
+    @GET("/home")
+    fun fetchHomeData(@Header("Authorization") token: String): Call<HomeResponse>
+
+    // 카테고리 분석
+    @GET("/history/analysis")
+    fun fetchAnalysisData(@Header("Authorization") token: String): Call<AnalysisResponse>
 }
 
 object RetrofitClient {
