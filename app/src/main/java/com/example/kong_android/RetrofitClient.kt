@@ -7,6 +7,7 @@ import com.example.kong_android.auth.SignupRequest
 import com.example.kong_android.auth.SignupResponse
 import com.example.kong_android.home.AnalysisResponse
 import com.example.kong_android.home.HomeResponse
+import com.example.kong_android.record.GetHistoryResponse
 import com.google.gson.GsonBuilder
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -41,6 +42,10 @@ interface RetrofitService {
     // 카테고리 분석
     @GET("/history/analysis")
     fun fetchAnalysisData(@Header("Authorization") token: String): Call<AnalysisResponse>
+
+    // 기록 조회
+    @GET("/history")
+    fun fetchHistoryData(@Header("Authorization") token: String): Call<List<GetHistoryResponse>>
 }
 
 object RetrofitClient {

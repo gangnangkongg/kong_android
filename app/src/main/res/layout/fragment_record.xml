@@ -31,7 +31,7 @@
                 android:id="@+id/record_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="11"
+                android:text="수입/지출 기록"
                 android:textSize="16dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/pretendard_semibold"
@@ -39,18 +39,6 @@
                 app:layout_constraintTop_toBottomOf="@id/logo_img"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"/>
-
-            <TextView
-                android:id="@+id/record_title_tv2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="월 기록"
-                android:textSize="16dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/pretendard_semibold"
-                app:layout_constraintStart_toEndOf="@id/record_title_tv"
-                app:layout_constraintTop_toTopOf="@id/record_title_tv"
-                app:layout_constraintBottom_toBottomOf="@id/record_title_tv"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
