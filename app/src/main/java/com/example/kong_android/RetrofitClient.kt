@@ -3,6 +3,8 @@ package com.example.kong_android
 import retrofit2.Call
 import com.example.kong_android.auth.LoginRequest
 import com.example.kong_android.auth.LoginResponse
+import com.example.kong_android.auth.SignupRequest
+import com.example.kong_android.auth.SignupResponse
 import com.google.gson.GsonBuilder
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -21,8 +23,13 @@ import javax.net.ssl.X509TrustManager
 import okhttp3.logging.HttpLoggingInterceptor
 
 interface RetrofitService {
+    // 로그인
     @POST("/member/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
+
+    // 회원 가입
+    @POST("member/register")
+    fun registerUser(@Body request: SignupRequest): Call<SignupResponse>
 }
 
 object RetrofitClient {
