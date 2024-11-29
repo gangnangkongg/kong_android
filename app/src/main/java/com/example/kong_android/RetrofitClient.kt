@@ -34,7 +34,7 @@ interface RetrofitService {
     @POST("member/register")
     fun registerUser(@Body request: SignupRequest): Call<SignupResponse>
 
-    // 홈화면 금액
+    // 금액 리스트
     @GET("/home")
     fun fetchHomeData(@Header("Authorization") token: String): Call<HomeResponse>
 
