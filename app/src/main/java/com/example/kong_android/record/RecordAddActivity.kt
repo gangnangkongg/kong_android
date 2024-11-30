@@ -1,13 +1,20 @@
 package com.example.kong_android.record
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.kong_android.R
+import com.example.kong_android.RetrofitClient
+import com.example.kong_android.auth.SharedPreferencesManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RecordAddActivity : AppCompatActivity() {
     private lateinit var dateEdit: EditText
@@ -39,20 +46,16 @@ class RecordAddActivity : AppCompatActivity() {
 
         /* 수입 지출 여부 선택 시 스타일 변경 */
         typeBtnLayout.setOnCheckedChangeListener { _, checkedId ->
-            when(checkedId){
+            when (checkedId) {
                 R.id.import_type_btn -> {
-                    // 수입 선택 시 스타일 변경
                     importTypeBtn.setTextColor(resources.getColor(R.color.main_green))
                     importTypeBtn.setBackgroundResource(R.drawable.type_green_layout)
-
                     outlayTypeBtn.setTextColor(resources.getColor(R.color.deep_gray))
                     outlayTypeBtn.setBackgroundResource(R.drawable.type_soft_layout)
                 }
                 R.id.outlay_type_btn -> {
-                    // 지출 선택 시 스타일 변경
                     outlayTypeBtn.setTextColor(resources.getColor(R.color.deep_red))
                     outlayTypeBtn.setBackgroundResource(R.drawable.type_red_layout)
-
                     importTypeBtn.setTextColor(resources.getColor(R.color.deep_gray))
                     importTypeBtn.setBackgroundResource(R.drawable.type_soft_layout)
                 }
@@ -60,7 +63,48 @@ class RecordAddActivity : AppCompatActivity() {
         }
 
         /* 등록하기 버튼 클릭 시 서버에 전송 */
-        // 수입/지출 타입 여부 저장
+        recordAddBtn.setOnClickListener {
+            val date = dateEdit.text.toString()
+            val amount = amountEdit.text.toString().toLongOrNull()
+            val category = categoryEdit.text.toString()
+            val type = when (typeBtnLayout.checkedRadioButtonId) {
+                R.id.import_type_btn -> "INCOME"
+                R.id.outlay_type_btn -> "SPEND"
+                else -> null
+            }
 
+            if (date.isEmpty() || amount == null || category.isEmpty() || type == null) {
+                Toast.makeText(this, "모든 필드를 올바르게 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 요청 데이터 생성
+            val recordRequest = RecordRequest(date, amount, category, type)
+
+            // 서버 요청 (토큰은 SharedPreferences나 Intent에서 가져옴)
+            val sharedPreferencesManager = SharedPreferencesManager(this)
+            val token = "${sharedPreferencesManager.getAccessToken()}"
+
+            RetrofitClient.instance.addRecord(token, recordRequest)
+                .enqueue(object : Callback<RecordResponse> {
+                    override fun onResponse(
+                        call: Call<RecordResponse>,
+                        response: Response<RecordResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@RecordAddActivity, "기록이 성공적으로 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                            finish() // 페이지 종료
+                        } else {
+                            Log.e("APIError", "Error: ${response.code()}, ${response.errorBody()?.string()}")
+                            Toast.makeText(this@RecordAddActivity, "추가 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<RecordResponse>, t: Throwable) {
+                        Log.e("APIError", "Failure: ${t.message}")
+                        Toast.makeText(this@RecordAddActivity, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        }
     }
 }

@@ -8,6 +8,8 @@ import com.example.kong_android.auth.SignupResponse
 import com.example.kong_android.home.AnalysisResponse
 import com.example.kong_android.home.HomeResponse
 import com.example.kong_android.record.GetHistoryResponse
+import com.example.kong_android.record.RecordRequest
+import com.example.kong_android.record.RecordResponse
 import com.google.gson.GsonBuilder
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -46,6 +48,13 @@ interface RetrofitService {
     // 기록 조회
     @GET("/history")
     fun fetchHistoryData(@Header("Authorization") token: String): Call<List<GetHistoryResponse>>
+
+    // 기록 등록
+    @POST("/history")
+    fun addRecord(
+        @Header("Authorization") token: String,
+        @Body request: RecordRequest
+    ): Call<RecordResponse>
 }
 
 object RetrofitClient {
