@@ -137,26 +137,15 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/category_month_tv"
+                    android:id="@+id/category_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="11"
+                    android:text="카테고리별 지출"
                     android:textSize="16dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/pretendard_semibold"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/category_title_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="월 카테고리별 지출"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/pretendard_semibold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/category_month_tv"/>
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/category_chart_view"
@@ -165,7 +154,7 @@
                     android:layout_marginTop="25dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/category_month_tv"
+                    app:layout_constraintTop_toBottomOf="@id/category_title_tv"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="0.8"/>
 
