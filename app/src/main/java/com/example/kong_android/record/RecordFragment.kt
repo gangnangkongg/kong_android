@@ -13,7 +13,6 @@ import com.example.kong_android.R
 import com.example.kong_android.RetrofitClient
 import com.example.kong_android.auth.LoginActivity
 import com.example.kong_android.auth.SharedPreferencesManager
-import com.example.kong_android.databinding.FragmentMyBinding
 import com.example.kong_android.databinding.FragmentRecordBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call

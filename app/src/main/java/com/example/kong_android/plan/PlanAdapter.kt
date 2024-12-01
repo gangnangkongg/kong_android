@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kong_android.R
 
 class PlanAdapter : RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
-    private val plans = listOf(
-        PlanData("2024.11.01", "2024.11.07", "50,000", "30,000", "20,000"),
-        PlanData("2024.11.01", "2024.11.30", "250,000", "30,000", "220,000")
-    )
+    private val plans = mutableListOf<GetPlanResponse>()
 
     class PlanViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val planStartDate: TextView = view.findViewById(R.id.plan_start_date)
@@ -31,15 +28,16 @@ class PlanAdapter : RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
         val plan = plans[position]
         holder.planStartDate.text = plan.startDate
         holder.planEndDate.text = plan.endDate
-        holder.planTargetAmount.text = plan.targetAmount
-        holder.planCurrentAmount.text = plan.currentAmount
-        holder.planRemainAmount.text = plan.remainAmount
+        holder.planTargetAmount.text = plan.amount.toString()
+        holder.planCurrentAmount.text = plan.spent.toString()
+        holder.planRemainAmount.text = (plan.amount - plan.spent).toString()
     }
 
-    override fun getItemCount(): Int {
-        return plans.size
-    }
+    override fun getItemCount(): Int = plans.size
 
-    // 데이터 클래스 추가
-    data class PlanData(val startDate: String, val endDate: String, val targetAmount: String, val currentAmount: String, val remainAmount: String )
+    fun updatePlans(newPlans: List<GetPlanResponse>) {
+        plans.clear()
+        plans.addAll(newPlans)
+        notifyDataSetChanged()
+    }
 }

@@ -7,6 +7,7 @@ import com.example.kong_android.auth.SignupRequest
 import com.example.kong_android.auth.SignupResponse
 import com.example.kong_android.home.AnalysisResponse
 import com.example.kong_android.home.HomeResponse
+import com.example.kong_android.plan.PlanApiResponse
 import com.example.kong_android.record.GetHistoryResponse
 import com.example.kong_android.record.RecordRequest
 import com.example.kong_android.record.RecordResponse
@@ -55,6 +56,10 @@ interface RetrofitService {
         @Header("Authorization") token: String,
         @Body request: RecordRequest
     ): Call<RecordResponse>
+
+    // 계획 조회
+    @GET("/plan")
+    fun fetchPlanData(@Header("Authorization") token: String): Call<PlanApiResponse>
 }
 
 object RetrofitClient {
