@@ -15,6 +15,8 @@ import com.example.kong_android.auth.SharedPreferencesManager
 import com.example.kong_android.databinding.FragmentRecordBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RecordFragment: Fragment() {
 
@@ -58,10 +60,10 @@ class RecordFragment: Fragment() {
         val token = "$token"
 
         RetrofitClient.instance.fetchHistoryData(token)
-            .enqueue(object : retrofit2.Callback<List<GetHistoryResponse>> {
+            .enqueue(object : Callback<List<GetHistoryResponse>> {
                 override fun onResponse(
                     call: Call<List<GetHistoryResponse>>,
-                    response: retrofit2.Response<List<GetHistoryResponse>>
+                    response: Response<List<GetHistoryResponse>>
                 ) {
                     if (response.isSuccessful) {
                         // 응답 데이터가 성공적으로 받아졌을 때 처리

@@ -28,8 +28,10 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 
 interface RetrofitService {
     // 로그인
@@ -69,6 +71,13 @@ interface RetrofitService {
         @Header("Authorization") token: String,
         @Body planRequest: PlanRequest
     ): Call<PlanResponse>
+
+    // 기록 삭제
+    @DELETE("/history/{id}")
+    fun deleteRecord(
+        @Header("Authorization") token: String,
+        @Path("id") recordId: Long
+    ): Call<Void>
 }
 
 object RetrofitClient {
