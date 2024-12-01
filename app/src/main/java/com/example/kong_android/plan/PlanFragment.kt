@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kong_android.R
 import com.example.kong_android.RetrofitClient
 import com.example.kong_android.auth.SharedPreferencesManager
 import com.example.kong_android.databinding.FragmentPlanBinding
-import com.example.kong_android.record.RecordAdapter
-import com.example.kong_android.record.RecordAddActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class PlanFragment: Fragment() {
 
@@ -59,10 +58,10 @@ class PlanFragment: Fragment() {
         val authToken = "$token"
 
         RetrofitClient.instance.fetchPlanData(authToken)
-            .enqueue(object : retrofit2.Callback<PlanApiResponse> {
+            .enqueue(object : Callback<PlanApiResponse> {
                 override fun onResponse(
                     call: Call<PlanApiResponse>,
-                    response: retrofit2.Response<PlanApiResponse>
+                    response: Response<PlanApiResponse>
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let { apiResponse ->

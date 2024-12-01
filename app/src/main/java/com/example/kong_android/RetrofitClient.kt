@@ -78,6 +78,13 @@ interface RetrofitService {
         @Header("Authorization") token: String,
         @Path("id") recordId: Long
     ): Call<Void>
+
+    // 계획 삭제
+    @DELETE("/plan/{id}")
+    fun deletePlan(
+        @Header("Authorization") token: String,
+        @Path("id") planId: Long
+    ): Call<Void>
 }
 
 object RetrofitClient {

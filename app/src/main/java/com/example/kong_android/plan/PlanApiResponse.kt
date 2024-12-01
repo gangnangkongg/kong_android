@@ -7,7 +7,7 @@ data class PlanApiResponse(
 )
 
 data class GetPlanResponse(
-    val id: Int,
+    val id: Long,
     val userId: Int,
     val startDate: String,
     val endDate: String,
