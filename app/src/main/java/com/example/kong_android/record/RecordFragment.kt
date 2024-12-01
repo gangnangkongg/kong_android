@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kong_android.R
 import com.example.kong_android.RetrofitClient
 import com.example.kong_android.auth.LoginActivity
 import com.example.kong_android.auth.SharedPreferencesManager

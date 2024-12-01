@@ -81,7 +81,7 @@ class RecordAddActivity : AppCompatActivity() {
             // 요청 데이터 생성
             val recordRequest = RecordRequest(date, amount, category, type)
 
-            // 서버 요청 (토큰은 SharedPreferences나 Intent에서 가져옴)
+            // 서버 요청 (토큰은 SharedPreferences에서 가져옴)
             val sharedPreferencesManager = SharedPreferencesManager(this)
             val token = "${sharedPreferencesManager.getAccessToken()}"
 
